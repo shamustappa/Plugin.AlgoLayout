@@ -43,11 +43,11 @@ We're just getting started, and we're looking for visionaries who understand the
 
 1. **Clone the Repository**
     ```bash
-    git clone https://github.com/yourusername/AlgoLayout.git
+    git clone https://github.com/shamustappa/Plugin.AlgoLayout.git
     ```
 2. **Navigate to the Project Folder**
     ```bash
-    cd AlgoLayout
+    cd Plugin.AlgoLayout
     ```
 3. **Run the Application**
     ```bash
@@ -56,8 +56,8 @@ We're just getting started, and we're looking for visionaries who understand the
 
 ## Contact
 
-👤 **Your Name**  
-📧 your.email@example.com
+👤 **Sha Mustappa**  
+📧 shamustappa@gmail.com
 
 ## License
 
