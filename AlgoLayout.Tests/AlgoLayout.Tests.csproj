@@ -84,7 +84,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AlgoLayout.Core\AlgoLayout.Core.csproj">
+      <Project>{0cfb7bf6-cb3c-4ef5-a556-ef5d9d6e1372}</Project>
+      <Name>AlgoLayout.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="README.txt" />
   </ItemGroup>
