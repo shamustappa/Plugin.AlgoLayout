@@ -61,10 +61,12 @@
     <Compile Include="Interfaces\ICarPark.cs" />
     <Compile Include="Interfaces\IEntrance.cs" />
     <Compile Include="Interfaces\IFireSafety.cs" />
+    <Compile Include="Interfaces\IGraphAlgorithm.cs" />
     <Compile Include="Interfaces\ILayout.cs" />
     <Compile Include="Interfaces\IMEP.cs" />
     <Compile Include="Interfaces\IMicrosite.cs" />
     <Compile Include="Interfaces\IOutdoorView.cs" />
+    <Compile Include="Interfaces\IRhinoAlgorithm.cs" />
     <Compile Include="Interfaces\IRoom.cs" />
     <Compile Include="Interfaces\IServices.cs" />
     <Compile Include="Interfaces\ITransportation.cs" />
