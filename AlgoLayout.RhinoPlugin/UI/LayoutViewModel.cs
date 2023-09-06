@@ -1,58 +1,60 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Rhino;
+using AlgoLayout.RhinoPlugin.RhinoModels;
+using AlgoLayout.RhinoPlugin.Commands;
+using static NUnit.Framework.RetryAttribute;
 
 namespace AlgoLayout.RhinoPlugin.UI
 {
-    public class LayoutViewModel : INotifyPropertyChanged
+    public class LayoutViewModel : ViewModelBase
     {
-        private int _numberOfRooms;
-        private string _selectedAlgorithm;
+        private RhinoLayout _rhinoLayout;
+        private RhinoRoom _rhinoRoom;
 
-        public int NumberOfRooms
-        {
-            get { return _numberOfRooms; }
-            set
-            {
-                if (_numberOfRooms != value)
-                {
-                    _numberOfRooms = value;
-                    OnPropertyChanged("NumberOfRooms");
-                }
-            }
-        }
+        public ObservableCollection<GeometryBase> LayoutGeometry { get; set; }
 
-        public string SelectedAlgorithm
-        {
-            get { return _selectedAlgorithm; }
-            set
-            {
-                if (_selectedAlgorithm != value)
-                {
-                    _selectedAlgorithm = value;
-                    OnPropertyChanged("SelectedAlgorithm");
-                }
-            }
-        }
-
-        public ICommand RunOptimizationCommand { get; private set; }
+        public ICommand RunLayoutCommand { get; set; }
+        public ICommand StopLayoutCommand { get; set; }
+        public ICommand ExportLayoutCommand { get; set; }
 
         public LayoutViewModel()
         {
-            RunOptimizationCommand = new RelayCommand(RunOptimization);
+            _rhinoLayout = new RhinoLayout();
+            _rhinoRoom = new RhinoRoom();
+
+            LayoutGeometry = new ObservableCollection<GeometryBase>();
+
+            RunLayoutCommand = new RelayCommand(RunLayout);
+            StopLayoutCommand = new RelayCommand(StopLayout);
+            ExportLayoutCommand = new RelayCommand(ExportLayout);
+
+            _rhinoLayout.LayoutAlgorithmCompleted += OnLayoutAlgorithmCompleted;
         }
 
-        private void RunOptimization()
+        private void RunLayout()
         {
-            // Call Rhino command to run the optimization
-            RhinoApp.RunScript($"RunLayoutOptimization {NumberOfRooms} {SelectedAlgorithm}", true);
+            _rhinoLayout.RunLayoutAlgorithm();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        private void StopLayout()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            _rhinoLayout.StopLayoutAlgorithm();
+        }
+
+        private void ExportLayout()
+        {
+            var exportedGeometry = _rhinoLayout.ExportLayout();
+            // TODO: Implement export logic
+        }
+
+        private void OnLayoutAlgorithmCompleted(object sender, EventArgs e)
+        {
+            LayoutGeometry.Clear();
+            foreach (var geo in _rhinoLayout.ExportLayout())
+            {
+                LayoutGeometry.Add(geo);
+            }
         }
     }
 }

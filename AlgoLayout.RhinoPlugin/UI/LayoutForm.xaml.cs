@@ -1,7 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using Rhino;
+using AlgoLayout.RhinoPlugin.UI;
 
 namespace AlgoLayout.RhinoPlugin.UI
 {
@@ -10,20 +9,33 @@ namespace AlgoLayout.RhinoPlugin.UI
     /// </summary>
     public partial class LayoutForm : Window
     {
+        public LayoutViewModel ViewModel { get; set; }
+
         public LayoutForm()
         {
             InitializeComponent();
+            ViewModel = new LayoutViewModel();
+            DataContext = ViewModel;
         }
 
-        private void btnRun_Click(object sender, RoutedEventArgs e)
+        private void RunLayoutButton_Click(object sender, RoutedEventArgs e)
         {
-            int numberOfRooms = int.Parse(txtNumberOfRooms.Text);
-            string selectedAlgorithm = ((ComboBoxItem)cmbAlgorithm.SelectedItem).Content.ToString();
+            ViewModel.RunLayoutCommand.Execute(null);
+        }
 
-            // Call Rhino command to run the optimization
-            RhinoApp.RunScript($"RunLayoutOptimization {numberOfRooms} {selectedAlgorithm}", true);
+        private void StopLayoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.StopLayoutCommand.Execute(null);
+        }
 
-            this.Close();
+        private void ExportLayoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ExportLayoutCommand.Execute(null);
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            // Perform any cleanup or resource release here
         }
     }
 }

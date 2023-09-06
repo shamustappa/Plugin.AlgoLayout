@@ -1,50 +1,56 @@
-﻿using Rhino;
-using Rhino.Geometry;
-using AlgoLayout.Core;
+﻿using System.Collections.Generic;
 using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
+using Rhino.Geometry;
 
 namespace AlgoLayout.RhinoPlugin.Utilities
 {
     public static class RhinoUtils
     {
-        public static void AddLayoutToRhino(Layout layout, RhinoDoc doc)
+        // Convert Rhino Point3d to your custom point class
+        public static MyPoint ConvertToPoint3d(Point3d point)
         {
-            // Clear existing layout geometry
-            doc.Objects.Clear();
-
-            // Add rooms as rectangles
-            foreach (var room in layout.Rooms)
-            {
-                var rect = new Rectangle3d(Plane.WorldXY, new Point3d(room.X, room.Y, 0), room.Width, room.Height);
-                doc.Objects.AddRectangle(rect);
-            }
-
-            // Add walk paths, entrances, etc. (if applicable)
-            // ...
-
-            // Redraw the Rhino view
-            doc.Views.Redraw();
+            return new MyPoint(point.X, point.Y, point.Z);
         }
 
-        public static Layout GetLayoutFromRhino(RhinoDoc doc)
+        // Convert your custom point class to Rhino Point3d
+        public static Point3d ConvertToRhinoPoint(MyPoint point)
         {
-            Layout layout = new Layout();
+            return new Point3d(point.X, point.Y, point.Z);
+        }
 
-            // Logic to convert Rhino geometry to Layout
-            // ...
+        // Check if two geometries collide
+        public static bool CheckCollision(GeometryBase geo1, GeometryBase geo2)
+        {
+            // TODO: Implement collision check logic
+            return false;
+        }
 
+        // Validate a given layout based on some criteria
+        public static bool ValidateLayout(List<GeometryBase> layout)
+        {
+            // TODO: Implement layout validation logic
+            return true;
+        }
+
+        // Optimize a given layout based on some criteria
+        public static List<GeometryBase> OptimizeLayout(List<GeometryBase> layout)
+        {
+            // TODO: Implement layout optimization logic
             return layout;
         }
 
-        public static void RunOptimization(Layout layout, string algorithm)
+        // Calculate efficiency score for a given layout
+        public static double CalculateEfficiency(List<GeometryBase> layout)
         {
-            // Logic to run the selected optimization algorithm on the layout
-            // ...
+            // TODO: Implement efficiency calculation logic
+            return 0.0;
+        }
 
-            // Update the Rhino document with the optimized layout
-            var doc = RhinoDoc.ActiveDoc;
-            AddLayoutToRhino(layout, doc);
+        // Export a given layout to a Rhino file
+        public static bool ExportToRhinoFile(List<GeometryBase> layout, string filePath)
+        {
+            // TODO: Implement export logic
+            return true;
         }
     }
 }

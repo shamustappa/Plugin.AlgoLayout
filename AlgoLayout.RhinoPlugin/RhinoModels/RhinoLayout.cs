@@ -1,40 +1,65 @@
-﻿using Rhino.Geometry;
-using AlgoLayout.Core.Models;
-public class RhinoLayout
+﻿using System;
+using System.Collections.Generic;
+using Rhino.Geometry;
+using AlgoLayout.RhinoPlugin.Interfaces;
+
+namespace AlgoLayout.RhinoPlugin.RhinoModels
 {
-    public Layout Layout { get; set; }
-
-    public RhinoLayout(Layout layout)
+    public class RhinoLayout : IRhinoLayout
     {
-        Layout = layout;
-    }
+        public List<GeometryBase> InitialGeometry { get; private set; }
+        public bool IsLayoutAlgorithmRunning { get; private set; }
 
-    public void ToRhinoGeometry(RhinoDoc doc)
-    {
-        // Convert Rooms to Rhino Geometry
-        foreach (var room in Layout.Rooms)
+        public event EventHandler LayoutAlgorithmCompleted;
+
+        public void InitializeLayout(List<GeometryBase> initialGeometry)
         {
-            var rect = new Rectangle3d(Plane.WorldXY, new Point3d(room.X, room.Y, 0), room.Width, room.Height);
-            doc.Objects.AddRectangle(rect);
+            InitialGeometry = initialGeometry;
         }
 
-        // Convert other elements like WalkPaths, Entrances, etc.
-        // ...
+        public void RunLayoutAlgorithm()
+        {
+            IsLayoutAlgorithmRunning = true;
 
-        doc.Views.Redraw();
+            // TODO: Implement the layout algorithm here
+
+            IsLayoutAlgorithmRunning = false;
+            LayoutAlgorithmCompleted?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void StopLayoutAlgorithm()
+        {
+            // TODO: Implement logic to stop the layout algorithm
+            IsLayoutAlgorithmRunning = false;
+        }
+
+        public List<GeometryBase> ExportLayout()
+        {
+            // TODO: Implement logic to export the layout as Rhino geometry
+            return new List<GeometryBase>();
+        }
+
+        public bool ValidateLayout()
+        {
+            // TODO: Implement logic to validate the layout
+            return true;
+        }
+
+        public void OptimizeLayout()
+        {
+            // TODO: Implement logic to optimize the layout
+        }
+
+        public double CalculateEfficiencyScore()
+        {
+            // TODO: Implement logic to calculate the layout's efficiency score
+            return 0.0;
+        }
+
+        public bool CheckCollisions()
+        {
+            // TODO: Implement logic to check for layout collisions
+            return false;
+        }
     }
-
-    public static Layout FromRhinoGeometry(RhinoDoc doc)
-    {
-        Layout layout = new Layout();
-
-        // Convert Rhino Geometry to Rooms
-        // ...
-
-        // Convert other Rhino Geometry to WalkPaths, Entrances, etc.
-        // ...
-
-        return layout;
-    }
-}
 }
