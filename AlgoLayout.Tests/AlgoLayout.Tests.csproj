@@ -89,6 +89,10 @@
       <Project>{0cfb7bf6-cb3c-4ef5-a556-ef5d9d6e1372}</Project>
       <Name>AlgoLayout.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AlgoLayout.RhinoPlugin\AlgoLayout.RhinoPlugin.csproj">
+      <Project>{5bc74a94-8df1-4220-9bab-e5df902b57b3}</Project>
+      <Name>AlgoLayout.RhinoPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.txt" />
